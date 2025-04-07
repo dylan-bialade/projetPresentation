@@ -1,3 +1,53 @@
+classDiagram
+    class User {
+        int id
+        string fullName
+        string username
+        string email
+        string password
+    }
+
+    class Post {
+        int id
+        string title
+        string slug
+        string summary
+        string content
+        DateTime publishedAt
+    }
+
+    class Comment {
+        int id
+        string content
+        DateTime publishedAt
+    }
+
+    class Tag {
+        int id
+        string name
+    }
+
+    User "1" --> "0..*" Post : écrit
+    User "1" --> "0..*" Comment : écrit
+
+    Post "1" --> "0..*" Comment : contient
+    Post "1" --> "0..*" Tag : a
+    Comment "*" --> "1" Post : appartient à
+    Comment "*" --> "1" User : auteur
+
+    Post "*" --> "*" Tag : tags
+
+
+
+
+
+
+
+
+
+
+
+
 Symfony Demo Application
 ========================
 
