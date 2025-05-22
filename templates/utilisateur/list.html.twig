@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center text-primary">Gestion des Utilisateurs</h1>
+        <a href="{{ path('app_utilisateur_add') }}" class="btn btn-success mb-4">Ajouter un nouvel utilisateur</a>
+
+        <table class="table table-hover table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Nom d'utilisateur</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Rôles</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for utilisateur in utilisateurs %}
+                    <tr>
+                        <td class="text-center">{{ utilisateur.id }}</td>
+                        <td class="text-center">{{ utilisateur.nom }}</td>
+                        <td class="text-center">{{ utilisateur.email }}</td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                {% for role in roles %}
+                                    <li class="d-flex align-items-center">
+                                        {% if role in utilisateur.roles %}
+                                            <span class="me-2 text-success">&#128515; 👍</span> 
+                                            <span>{{ role.nom }}</span>
+                                        {% else %}
+                                            <span class="me-2 text-danger">&#10060;</span> 
+                                            <span>{{ role.nom }}</span>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('app_utilisateur_update', { id: utilisateur.id }) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            <form method="post" action="{{ path('app_utilisateur_delete', { id: utilisateur.id }) }}" style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ utilisateur.id) }}">
+                                <button class="btn btn-danger btn-sm">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">Aucun utilisateur trouvé.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

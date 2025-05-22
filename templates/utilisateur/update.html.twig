@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier un élément{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1>Modifier un élément</h1>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary mt-3">Enregistrer les modifications</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_utilisateur_list') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
+    </div>
+{% endblock %}
